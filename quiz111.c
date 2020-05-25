@@ -1,25 +1,18 @@
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-int sum;
-void *runner(void *param);
-int main(int argc, char *argv[])
+#include <stdio.h>   
+#include <windows.h>   
+
+DWORD WINAPI ThreadFun(LPVOID pM)
 {
-	pthread_t tid;
-	pthread_attr_t attr;
-	pthread_attr_init(&attr);
-	pthread_create(&tid, &attr, runner, argv[1]);
-	
-	pthread_join(tid, NULL);
-	printf("sum = %d/n", sum);
+	printf("子线程的线程ID号为：%d\n子线程输出Hello World\n", GetCurrentThreadId());
+	return 0;
 }
-void *runner(void *param)
+ 
+int main()
 {
-	int i, upper = atoi(param);
-	sum = 0;
-	if (upper > 0) {
-		for (i = 1; i <= upper; i++)
-			sum += i;
-	}
-	pthread_exit(0);
+	printf("     最简单的创建多线程实例\n");
+	printf(" -- by MoreWindows( http://blog.csdn.net/MoreWindows ) --\n\n");
+
+	HANDLE handle = CreateThread(NULL, 0, ThreadFun, NULL, 0, NULL);
+	WaitForSingleObject(handle, INFINITE);
+	return 0;
 }
