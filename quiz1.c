@@ -1,27 +1,53 @@
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-int sum; /* this data is shared by the thread(s) */
-void *runner(void *param){
-  int i, upper = atoi(param);
-  sum = 0;
-  if (upper > 0) {
-  for (i = 1; i <= upper; i++)
-  sum += i;
-  }
-pthread_exit(0);
+#include <stdio.h> // printf(),
+#include <stdlib.h> // exit(), EXIT_SUCCESS
+#include <pthread.h> // pthread_create(), pthread_join()
+#include <semaphore.h> // sem_init()
+
+sem_t binSem;
+
+void* helloWorld(void* arg);
+
+int main() {
+	// Result for System call
+	int res = 0;
+
+	// Initialize semaphore
+	res = sem_init(&binSem, 0, 0);
+	if (res) {
+		printf("Semaphore initialization failed!!/n");
+		exit(EXIT_FAILURE);
+	}
+
+	// Create thread
+	pthread_t thdHelloWorld;
+	res = pthread_create(&thdHelloWorld, NULL, helloWorld, NULL);
+	if (res) {
+		printf("Thread creation failed!!/n");
+		exit(EXIT_FAILURE);
+	}
+
+	while (1) {
+		// Post semaphore
+		sem_post(&binSem);
+		printf("In main, sleep several seconds./n");
+		sleep(1);
+	}
+
+	// Wait for thread synchronization
+	void *threadResult;
+	res = pthread_join(thdHelloWorld, &threadResult);
+	if (res) {
+		printf("Thread join failed!!/n");
+		exit(EXIT_FAILURE);
+	}
+
+	exit(EXIT_SUCCESS);
 }
 
-}; /* the thread */
-int main(int argc, char *argv[])
-{
-pthread_t tid; /* the thread identifier */
-pthread_attr_t attr; /* set of attributes for the thread */
-/* get the default attributes */
-pthread_attr_init(&attr);
-/* create the thread */
-pthread_create(&tid,&attr,runner,argv[1]);
-/* now wait for the thread to exit */
-pthread_join(tid,NULL);
-printf("sum = %d₩n",sum);
+void* helloWorld(void* arg) {
+	while (1) {
+		// Wait semaphore
+		sem_wait(&binSem);
+		printf("Hello World/n");
+	}
 }
