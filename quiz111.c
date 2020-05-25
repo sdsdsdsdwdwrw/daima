@@ -1,5 +1,5 @@
 #include <stdio.h>   
-#include <windows.h>   
+
 
 DWORD WINAPI ThreadFun(LPVOID pM)
 {
@@ -10,7 +10,7 @@ DWORD WINAPI ThreadFun(LPVOID pM)
 int main()
 {
 	printf("     最简单的创建多线程实例\n");
-	printf(" -- by MoreWindows( http://blog.csdn.net/MoreWindows ) --\n\n");
+	
 
 	HANDLE handle = CreateThread(NULL, 0, ThreadFun, NULL, 0, NULL);
 	WaitForSingleObject(handle, INFINITE);
