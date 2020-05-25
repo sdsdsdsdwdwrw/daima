@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	pthread_create(&tid, &attr, runner, argv[1]);
-	
 	pthread_join(tid, NULL);
 	printf("sum = %d₩n", sum);
 }
