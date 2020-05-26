@@ -11,7 +11,7 @@ if(argc!=2){
 	fprintf(stderr,"usage:a.out<integer value\n>");
 	return -1;
 }
-if(atoi(argv[1]<0){
+if(atoi(argv[1]<0)){
 	fprintf(stderr,"Argument %d must be non-negative\n",atoi(argv[1]));
 	return -1;
 }
