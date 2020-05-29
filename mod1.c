@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define NUM_THREADS 5
 typedef struct
 {
 	int c_no;
@@ -9,10 +10,11 @@ typedef struct
 	int p;
 	int time;
 }process;
-void run(process *pram, int w)
+process s[5];
+void run(int w)
 {
-	pram[w].c_no;
-	printf("id=%d,youxiandu=%d\n", pram[w].p_id, pram[w].p);
+	s[w].c_no;
+	printf("id=%d,youxiandu=%d\n", s[w].p_id, s[w].p);
 	pthread_exit(0);
 };
 void sort(process *p, int N) {
@@ -28,7 +30,7 @@ void sort(process *p, int N) {
 	}
 }
 int main() {
-	process s[5];
+	
 	for (int i = 0; i < 5; i++) {
 		int a, b, c, d;
 		scanf("%d%d%d%d", &a, &b, &c, &d);
@@ -38,13 +40,13 @@ int main() {
 		s[i].time = d;
 	}//xianchengchi
 	sort(s, 5);
-	pthread_t tid[5];
+	pthread_t tid[NUM_THREADS];
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
-	for (int i = 0; i < 5; i++) {
-		pthread_create(&tid, &attr, run, s,i);
+	for (int i = 0; i < NUM_THREADS; i++) {
+		pthread_create(&tid, &attr, run, i);
 	}
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < NUM_THREADS; i++) {
 		pthread_join(tid[i], NULL);
 	}
 }
