@@ -55,7 +55,7 @@ int main() {
 	}
 	for (int i = 0; i < NUM_THREADS; i++) {
 		int *t = p_id + i;
-		pthread_create(&tid, &attr, run,(void*)t);
+		pthread_create(&tid[i], &attr, run,(void*)t);
 	}
 	for (int i = 0; i < NUM_THREADS; i++) {
 		pthread_join(tid[i], NULL);
