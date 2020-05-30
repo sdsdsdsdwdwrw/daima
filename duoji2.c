@@ -98,24 +98,14 @@ int main() {
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	int p_id[5];
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < NUM_THREADS; i++) {
 		p_id[i] = 4 - i;
 	}
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < NUM_THREADS; i++) {
 		int *t = p_id + i;
 		pthread_create(&tid[i], &attr, run, (void*)t);
 	}
-	//zuiduan
-	
-	
-	//int ind = (youxian + 1);
-	//for (int i = ind; i < 5; i++) {
-	//	p_id[i] = 4 - i;
-	//}
-	//for (int i = ind; i < 5; i++) {
-	//	int *t = p_id + i;
-	//	pthread_create(&tid[i], &attr, run, (void*)t);
-	//}
+
 	for (int i = 0; i < NUM_THREADS; i++) {
 		pthread_join(tid[i], NULL);
 	}
