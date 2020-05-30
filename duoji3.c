@@ -69,6 +69,7 @@ int main() {
 	int youxian = 0;
 	process you[5];
 	for (int i = 0; i < 5; i++) {
+
 		if (s[i].c_no == 1) {
 			you[youxian] = s[i];
 			youxian++;
@@ -84,6 +85,7 @@ int main() {
 		}
 	}
 	sort2(zui, zuiduan);
+
 	for (int i = 0; i < youxian; i++) {
 		s[i] = you[i];
 	}
@@ -105,7 +107,6 @@ int main() {
 		int *t = p_id + i;
 		pthread_create(&tid[i], &attr, run, (void*)t);
 	}
-
 	for (int i = 0; i < NUM_THREADS; i++) {
 		pthread_join(tid[i], NULL);
 	}
